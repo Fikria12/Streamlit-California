@@ -18,7 +18,7 @@ def convert_df(df):
 
 def main():
     # Load picture
-    image_california = Image.open('california.jpg')
+    image_california = Image.open('hospital.jpg')
 
     # Add explanatory text and picture in the sidebar
     st.sidebar.info('This app is created to predict price home California')    
