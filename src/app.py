@@ -8,15 +8,21 @@ from PIL import Image
 # Load the model
 model_path = 'Lightgbm.pkl'
 if os.path.exists(model_path):
-    model = pickle.load(open(model_path, 'rb'))
+    with open(model_path, 'rb') as file:
+        model = pickle.load(file)
 else:
-    print(f"File not found: {model_path}")
+    model = None
+    st.error(f"Model file not found: {model_path}")
 
 @st.cache_data
 def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 def main():
+    if model is None:
+        st.error("Model is not loaded. Please check the model file.")
+        return
+
     # Assuming your script and img folder are in the same parent directory
     base_path = os.path.dirname(__file__)
     image_path = os.path.join(base_path, '..', 'img', 'hospital.jpg')
@@ -69,9 +75,15 @@ def main():
     result = ""
 
     # Make a prediction 
+
     if st.button("Predict"):
-        output = model.predict(input_df)
-        result = "Your best price for finding the house in California is ${:,.2f}".format(output[0])
+        # Make sure the model is loaded before prediction
+        if model:
+            output = model.predict(input_df)
+            # Your prediction handling code
+            result = "Your best price for finding the house in California is ${:,.2f}".format(output[0])
+        else:
+            st.error("Model is not loaded. Unable to predict.")        
 
     # Show prediction result
     st.success(result)          
