@@ -17,8 +17,10 @@ def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 def main():
-    # Load picture
-    image_california = Image.open('hospital.jpg')
+    # Assuming your script and img folder are in the same parent directory
+    base_path = os.path.dirname(__file__)
+    image_path = os.path.join(base_path, '..', 'img', 'hospital.jpg')
+    image_california = Image.open(image_path)
 
     # Add explanatory text and picture in the sidebar
     st.sidebar.info('This app is created to predict price home California')    
