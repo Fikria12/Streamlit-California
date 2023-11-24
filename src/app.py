@@ -6,7 +6,7 @@ import os
 from PIL import Image
 
 # Load the model
-model_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'Lightgbm.pkl')
+model_path = 'Lightgbm.pkl'
 if os.path.exists(model_path):
     model = pickle.load(open(model_path, 'rb'))
 else:
